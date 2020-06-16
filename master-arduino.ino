@@ -34,9 +34,9 @@ void setup() {
   pinMode(ampul_role, OUTPUT);
   pinMode(fan_role, OUTPUT);
   lcd.begin(16, 2); // LCD ekranımızın satır ve sütununu belirliyoruz
-  Wire.begin(1);
+  Wire.begin();
   /* I2C haberleşmesi, haberleşme adresi 1 olan bir slave cihaz olarak başlatıldı */
-  Wire.onRequest(istekGeldiginde);
+ // Wire.onRequest(istekGeldiginde);
   /* 
   Master olan cihaz bu Arduino'dan veri istediğinde gerçekleşecek işlem seçildi
   */
@@ -106,21 +106,21 @@ void loop() {
   delay(1000); // devremizin daha verimli çalışabilmesi için delay süre komutumuzu koyuyoruz. 
 //lcd.clear();
   
-  //Wire.beginRequest();
-  //Wire.write(sensoryuzdesi);
-  //Wire.write(sicaklik_degeri);
-  //Wire.write(voltaj_degeri);
-  //Wire.endTransmission();
+ //=====================================================================================*/
+  Wire.beginTransmission(1);
+  Wire.write(sensoryuzdesi);
+  Wire.write(sicaklik_degeri);
+  Wire.write(voltaj_degeri );
+  Wire.endTransmission();
 
 }
 
-void istekGeldiginde()
+/*void istekGeldiginde()
 {
   /* 
   * Eğer master bu cihazdan veri istiyor ise master cihaza "Merhaba" verisi yollanılır 
   * Eğer bu bir sensör olsaydı "merhaba" yerine sıcaklık veya ivme verisi yollanıyor olacaktı
   */
-   Wire.write(sensoryuzdesi); 
+   //Wire.write(sensoryuzdesi); 
    //Wire.write(sicaklik_degeri);
    //Wire.write(voltaj_degeri);
-}
